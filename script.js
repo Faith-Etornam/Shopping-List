@@ -30,6 +30,10 @@ function addItem(event) {
   li.appendChild(document.createTextNode(newItem));
 
   const button = createButton("remove-item btn-link text-red");
+
+  li.appendChild(button);
+
+  itemList.appendChild(li)
 }
 
 itemForm.addEventListener("submit", addItem);
