@@ -2,13 +2,34 @@ const itemForm = document.getElementById("item-form");
 const itemInput = document.getElementById("item-input");
 const itemList = document.getElementById("item-list");
 
+function createIcon(classes) {
+  const icon = document.createElement("i");
+  icon.className = classes;
+  return icon;
+}
+
+function createButton(classes) {
+  const button = document.createElement("button");
+  button.className = classes;
+  const icon = createIcon("fa-solid fa-xmark");
+  button.appendChild(icon);
+  return button;
+}
+
 function addItem(event) {
   event.preventDefault();
-  if (itemInput.value === "") {
+
+  const newItem = itemInput.value;
+
+  if (newItem === "") {
     alert("Please add an item");
     return;
   }
-  
+
+  const li = document.createElement("li");
+  li.appendChild(document.createTextNode(newItem));
+
+  const button = createButton("remove-item btn-link text-red");
 }
 
 itemForm.addEventListener("submit", addItem);
