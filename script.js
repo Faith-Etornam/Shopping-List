@@ -33,7 +33,17 @@ function addItem(event) {
 
   li.appendChild(button);
 
-  itemList.appendChild(li)
+  itemList.appendChild(li);
 }
 
+function removeItem(event) {
+    if (event.target.parentElement.classList.contains('remove-item')) {
+        event.target.parentElement.parentElement.remove()
+    }
+}
+
+// Events and their handlers
+
 itemForm.addEventListener("submit", addItem);
+
+itemList.addEventListener("click", removeItem);
