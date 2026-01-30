@@ -2,6 +2,8 @@ const itemForm = document.getElementById("item-form");
 const itemInput = document.getElementById("item-input");
 const itemList = document.getElementById("item-list");
 const itemClear = document.getElementById('clear')
+const filter = document.getElementById('filter')
+const items = itemList.querySelectorAll('li')
 
 function createIcon(classes) {
   const icon = document.createElement("i");
@@ -49,6 +51,13 @@ function clearItems() {
     }
 }
 
+function checkUI() {
+    if (items.length === 0) {
+        filter.style.display = 'none'
+        itemClear.style.display = 'none'
+    }
+}
+
 // Events and their handlers
 
 itemForm.addEventListener("submit", addItem);
@@ -56,3 +65,5 @@ itemForm.addEventListener("submit", addItem);
 itemList.addEventListener("click", removeItem);
 
 itemClear.addEventListener('click', clearItems)
+
+checkUI()
