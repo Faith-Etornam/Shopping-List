@@ -40,6 +40,11 @@ function checkUI() {
     filter.style.display = "block";
     itemClear.style.display = "block";
   }
+
+  formBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Item'
+  formBtn.style.backgroundColor = '#333'
+
+  isEditMode = false
 }
 
 function addItemToDOM(item) {
@@ -80,6 +85,15 @@ function onAddItemSubmit(event) {
   if (newItem === "") {
     alert("Please add an item");
     return;
+  }
+
+  if (isEditMode) {
+    const itemToEdit = itemList.querySelector('.edit-mode')
+
+    removeItemFromStorage(itemToEdit.textContent)
+    itemToEdit.classList.remove('edit-mode')
+    itemToEdit.remove()
+    isEditMode = false
   }
 
   addItemToDOM(newItem);
