@@ -4,6 +4,8 @@ const itemList = document.getElementById("item-list");
 const itemClear = document.getElementById("clear");
 const filter = document.getElementById("filter");
 
+// Function to create the Button and Icon
+
 function createIcon(classes) {
   const icon = document.createElement("i");
   icon.className = classes;
@@ -18,9 +20,21 @@ function createButton(classes) {
   return button;
 }
 
-function addItem(event) {
-  event.preventDefault();
+// Functionalities for the Shopping List
 
+function checkUI() {
+  const items = itemList.querySelectorAll("li");
+
+  if (items.length === 0) {
+    filter.style.display = "none";
+    itemClear.style.display = "none";
+  } else {
+    filter.style.display = "block";
+    itemClear.style.display = "block";
+  }
+}
+
+function addItemToDOM(item) {
   const newItem = itemInput.value;
 
   if (newItem === "") {
@@ -42,6 +56,13 @@ function addItem(event) {
   checkUI();
 }
 
+function onAddItemSubmit(event) {
+  event.preventDefault();
+
+  
+}
+
+
 function removeItem(event) {
   if (event.target.parentElement.classList.contains("remove-item")) {
     if (confirm("Are you sure you want to delete this item?")) {
@@ -57,7 +78,7 @@ function filterItems(event) {
 
   items.forEach((item) => {
     const itemName = item.firstChild.textContent.toLowerCase();
-    if (itemName.indexOf(textInput) !== -1) {
+    if (itemName.includes(textInput)) {
       item.style.display = "flex";
     } else {
       item.style.display = "none";
@@ -72,21 +93,9 @@ function clearItems() {
   checkUI();
 }
 
-function checkUI() {
-  const items = itemList.querySelectorAll("li");
-
-  if (items.length === 0) {
-    filter.style.display = "none";
-    itemClear.style.display = "none";
-  } else {
-    filter.style.display = "block";
-    itemClear.style.display = "block";
-  }
-}
-
 // Events and their handlers
 
-itemForm.addEventListener("submit", addItem);
+itemForm.addEventListener("submit", onAddItemSubmit);
 
 itemList.addEventListener("click", removeItem);
 
