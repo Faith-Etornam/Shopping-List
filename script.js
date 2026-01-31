@@ -22,6 +22,12 @@ function createButton(classes) {
 
 // Functionalities for the Shopping List
 
+function displayItems() {
+  const itemsFromStorage = getItemsFromStorage();
+  itemsFromStorage.forEach((item) => addItemToDOM(item));
+  checkUI();
+}
+
 function checkUI() {
   const items = itemList.querySelectorAll("li");
 
@@ -46,7 +52,7 @@ function addItemToDOM(item) {
 }
 
 function addItemToStorage(item) {
-  let itemsFromStorage = getItemsFromStorage();
+  const itemsFromStorage = getItemsFromStorage();
 
   itemsFromStorage.push(item);
 
@@ -81,13 +87,26 @@ function onAddItemSubmit(event) {
   itemInput.value = "";
 }
 
-function removeItem(event) {
+function onClickItem(event) {
   if (event.target.parentElement.classList.contains("remove-item")) {
-    if (confirm("Are you sure you want to delete this item?")) {
-      event.target.parentElement.parentElement.remove();
-    }
+    removeItem(event.target.parentElement.parentElement);
   }
-  checkUI();
+}
+
+function removeItem(item) {
+  if (confirm("Are you sure you want to delete this item")) {
+    item.remove();
+    removeItemFromStorage(item.textContent);
+    checkUI();
+  }
+}
+
+function removeItemFromStorage(value) {
+  const itemsFromStorage = getItemsFromStorage();
+
+  itemsFromStorage = itemsFromStorage.filter((item) => item !== value);
+
+  localStorage.setItem('items', JSON.stringify(itemsFromStorage))
 }
 
 function filterItems(event) {
@@ -111,14 +130,22 @@ function clearItems() {
   checkUI();
 }
 
-// Events and their handlers
+// Initializing App
 
-itemForm.addEventListener("submit", onAddItemSubmit);
+function init() {
+  // Events and their handlers
 
-itemList.addEventListener("click", removeItem);
+  itemForm.addEventListener("submit", onAddItemSubmit);
 
-itemClear.addEventListener("click", clearItems);
+  itemList.addEventListener("click", onClickItem);
 
-filter.addEventListener("input", filterItems);
+  itemClear.addEventListener("click", clearItems);
 
-checkUI();
+  filter.addEventListener("input", filterItems);
+
+  document.addEventListener("DOMContentLoaded", displayItems);
+
+  checkUI();
+}
+
+init();
