@@ -46,15 +46,22 @@ function addItemToDOM(item) {
 }
 
 function addItemToStorage(item) {
-  let itemsFromStorage;
-  if (localStorage.getItem('items') === null) {
-    itemsFromStorage = []
-  } else {
-    itemsFromStorage = JSON.parse(localStorage.getItem('items'))
-  }
-  itemsFromStorage.push(item)
+  let itemsFromStorage = getItemsFromStorage();
 
-  localStorage.setItem('items', JSON.stringify(itemsFromStorage))
+  itemsFromStorage.push(item);
+
+  localStorage.setItem("items", JSON.stringify(itemsFromStorage));
+}
+
+function getItemsFromStorage() {
+  let itemsFromStorage;
+
+  if (localStorage.getItem("items") === null) {
+    itemsFromStorage = [];
+  } else {
+    itemsFromStorage = JSON.parse(localStorage.getItem("items"));
+  }
+  return itemsFromStorage;
 }
 
 function onAddItemSubmit(event) {
@@ -68,7 +75,7 @@ function onAddItemSubmit(event) {
   }
 
   addItemToDOM(newItem);
-  addItemToStorage(newItem)
+  addItemToStorage(newItem);
 
   checkUI();
   itemInput.value = "";
